@@ -1,6 +1,6 @@
 # アーキテクチャ
 
-![overall.d.svg](./designs/overall.d.svg)
+![overall.d.png](./designs/overall.d.png)
 
 ## Cognito の認証について
 
