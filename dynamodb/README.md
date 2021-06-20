@@ -62,10 +62,6 @@ interface Main{
     acs: "pr" | "pu";
     /** スナップショットの数 */
     sc: number;
-    /** ページ数 */
-    pc: number;
-    /** アノテーションの数 */
-    ac: number;
     /** データ */
     d: {
         /** データ構造のバージョン */
@@ -74,6 +70,8 @@ interface Main{
         t: string;
         /** 説明 */
         d: string;
+        /** ページ数 */
+        pc: number;
         /** ページデータ */
         p: {
             /** ページの id */
@@ -85,6 +83,8 @@ interface Main{
             /** ページの名前 */
             p: string;
         }[];
+        /** アノテーションの数 */
+        ac: number;
         /** アノテーションデータ */
         a: {
             /** アノテーションの id */
