@@ -55,17 +55,25 @@ interface Main{
     /** score id */
     s: "Id";
     /** 作成日時 */
-    cAt: "UnixMS";
+    ca: "UnixMS";
     /** 更新日時 */
-    uAt: "UnixMS";
+    ua: "UnixMS";
     /** アクセスについて */
-    acs: "pr" | "pu";
+    as: "pr" | "pu";
     /** スナップショットの数 */
     sc: number;
+    s: {
+        /** スナップショットの ID */
+        i: string;
+        /** スナップショットの名前 */
+        n: string;
+        /** 作成日時 */
+        ca: number;
+    }[];
+    /** データ構造のバージョン */
+    v: string;
     /** データ */
     d: {
-        /** データ構造のバージョン */
-        v: string;
         /** タイトル */
         t: string;
         /** 説明 */
@@ -91,6 +99,8 @@ interface Main{
             i: number;
             /** アノテーション */
             a: string;
+            /** チャンクフラグ */
+            c: boolean
         }[];
     };
 }
@@ -119,8 +129,22 @@ interface Extension{
             i: number;
             /** アノテーション */
             a: string;
+            /** チャンクフラグ */
+            c: boolean
         }[];
     };
 
 }
 ```
+
+
+## アノテーションの追加
+
+アノテーションの更新処理で必要なパラメータ
+
+- 新しいアノテーションデータ
+- 更新日時
+- 現在のアノテーション数
+
+現在のアノテーション数からソートキーを推測する
+
