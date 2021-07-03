@@ -31,37 +31,50 @@
 
 テーブルを使用する場合はデータの構造や Query の利便性を考慮し、パーティションキーにプレフィックスを付ける。
 
-| プレフィックス | 構造の用途                 |
-| -------------- | -------------------------- |
-| sc:            | 楽譜のデータ管理に使用する |
+| プレフィックス | 構造の用途                           |
+| -------------- | ------------------------------------ |
+| sc:            | 楽譜のデータ管理に使用する           |
+| si:            | 楽譜のアイテムデータの管理に使用する |
 
 
 ## 楽譜のデータ管理
 
+### サマリーデータ
+
 ```typescript
 
 interface Summary{
-    /** プレフィックス + owner id */
-    o: "sc:Id";
+    /** "sc:" + owner id */
+    o: string;
     /** 固定値 */
-    s: "summary";    
+    s: "summary";
+    /** 楽観ロック */
+    l: number;
     /** 楽譜の保存数 */
     sc: number;
 }
 
+```
+
+### メインデータ 
+
+```typescript
+
 interface Main{
-    /** プレフィックス + owner id */
-    o: "sc:Id";
+    /** "sc:" + owner id */
+    o: string;
     /** score id */
-    s: "Id";
+    s: string;
     /** 作成日時 */
-    ca: "UnixMS";
+    ca: number;
     /** 更新日時 */
-    ua: "UnixMS";
+    ua: number;
     /** アクセスについて */
     as: "pr" | "pu";
     /** 楽観ロック */
     l: number;
+    /** データ構造のバージョン */
+    v: string;
     /** スナップショットの数 */
     nc: number;
     n: {
@@ -72,8 +85,6 @@ interface Main{
         /** 作成日時 */
         ca: number;
     }[];
-    /** データ構造のバージョン */
-    v: string;
     /** データ */
     d: {
         /** タイトル */
@@ -97,67 +108,83 @@ interface Main{
         ac: number;
         /** アノテーションデータ */
         a: {
-            [chunk: string]:{
-                /** アノテーションの id */
-                i: number;
-                /** アノテーションの文字列の長さ */
-                l: number;
-            }[]
-        };
+            /** アノテーションの id */
+            i: number;
+            /** アノテーションの文字列の長さ */
+            l: number;
+        }[];
     };
 }
 
+```
+
+### アノテーションデータ
+
+```typescript
+
 interface Annotation{
-    /** プレフィックス + owner id */
-    o: "sc:Id";
-    /** score id + chunk 3桁の数字 + 1 桁の数字 */
-    s: "Id:a:0000";
+    /** "sc:" + owner id */
+    o: string;
+    /** score id + chunk 2桁の数字 + 拡張用の1桁の数字 */
+    s: string;
     /** アノテーションデータ */
     a: {
-        [id: string /** アノテーションの ID 数字最大10桁 Main とずれが生じてもアノテーションを特定できるようにIDを指定する */]:{
-            /** アノテーションの内容 */
-            c: string;
-        }
+        [id: string /** アノテーションの ID 数字0埋め最大5桁 */]: string
     };
 }
 
 ```
 
 
-## アノテーションの追加
-
-アノテーションの更新処理で必要なパラメータ
-
-- 新しいアノテーションデータ
-- 更新日時
-- 現在のアノテーション数
-
-
-追加をする場合は chank が 200 個のアノテーションで満たされるようにする。
-つまり小さな chank から探索を行い、空きがあればデータを詰める処理を行う。
-
 ## 楽譜のアイテム
+
+### サマリーデータ
 
 ```typescript
 
-interface ItemSummary{
-  /** プレフィックス it: + owner id */
+interface Summary{
+  /** "si:" + owner id */
   o: string;
   /** 固定値 summary */
-  s: string;
+  s: "summary";
   /** owner が所有しているアイテムの合計サイズ */
   t: number;
+  /** owner が所有しているアイテムの数 */
+  c: number;
+  /** 楽観ロック */
+  l: number;
 }
 
+```
 
-interface ScoreItem{
+### メインデータ
+
+```typescript
+
+interface Main{
   /** プレフィックス it: + owner id */
   o: string;
   /** score id */
   s: string;
-  /** owner が所有しているアイテムの合計サイズ */
+  /** 楽観ロック */
+  l: number;
+  /** データ構造のバージョン */
+  v: number;
+  /** 楽譜に含まれるアイテムのトータルサイズ */
   t: number;
+  /** アイテムの数 */
+  c: number;
+  /** item のリスト */
+  i: {
+    /** アイテムの ID */
+    i: string;
+    /** アイテムオブジェクトの種類 (p: png, j: jpeg) */
+    k: "p" | "j";
+    /** アイテム１つに含まれるデータのトータルサイズ */
+    t: number;
+    /** アイテムのオリジナル名 */
+    n: string;
+  }[];
 }
-
 
 ```
