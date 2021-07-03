@@ -46,7 +46,7 @@ interface Summary{
     /** 固定値 */
     s: "summary";    
     /** 楽譜の保存数 */
-    scoreCount: number;
+    sc: number;
 }
 
 interface Main{
@@ -60,9 +60,11 @@ interface Main{
     ua: "UnixMS";
     /** アクセスについて */
     as: "pr" | "pu";
+    /** 楽観ロック */
+    l: number;
     /** スナップショットの数 */
-    sc: number;
-    s: {
+    nc: number;
+    n: {
         /** スナップショットの ID */
         i: string;
         /** スナップショットの名前 */
@@ -86,7 +88,7 @@ interface Main{
             i: number;
             /** アイテムの id */
             t: "Id";
-            /** オブジェクトの種類 (p: png, j: jpeg) */
+            /** アイテムオブジェクトの種類 (p: png, j: jpeg) */
             k: "p" | "j";
             /** ページの名前 */
             p: string;
@@ -113,42 +115,12 @@ interface Annotation{
     /** アノテーションデータ */
     a: {
         [id: string /** アノテーションの ID 数字最大10桁 Main とずれが生じてもアノテーションを特定できるようにIDを指定する */]:{
-            /** アノテーション */
-            a: string;
+            /** アノテーションの内容 */
+            c: string;
         }
     };
 }
 
-interface Extension{
-    /** プレフィックス + owner id */
-    o: "sc:Id";
-    /** score id + 4桁の数字 */
-    s: "Id0000";
-    /** データ */
-    d: {
-        /** ページデータ */
-        p: {
-            /** ページの id */
-            i: number;
-            /** アイテムの id */
-            t: "Id";
-            /** オブジェクトの種類 (p: png, j: jpeg) */
-            k: "p" | "j";
-            /** ページの名前 */
-            p: string;
-        }[];
-        /** アノテーションデータ */
-        a: {
-            /** アノテーションの id */
-            i: number;
-            /** アノテーション */
-            a: string;
-            /** チャンクフラグ */
-            c: boolean
-        }[];
-    };
-
-}
 ```
 
 
@@ -163,3 +135,29 @@ interface Extension{
 
 追加をする場合は chank が 200 個のアノテーションで満たされるようにする。
 つまり小さな chank から探索を行い、空きがあればデータを詰める処理を行う。
+
+## 楽譜のアイテム
+
+```typescript
+
+interface ItemSummary{
+  /** プレフィックス it: + owner id */
+  o: string;
+  /** 固定値 summary */
+  s: string;
+  /** owner が所有しているアイテムの合計サイズ */
+  t: number;
+}
+
+
+interface ScoreItem{
+  /** プレフィックス it: + owner id */
+  o: string;
+  /** score id */
+  s: string;
+  /** owner が所有しているアイテムの合計サイズ */
+  t: number;
+}
+
+
+```
