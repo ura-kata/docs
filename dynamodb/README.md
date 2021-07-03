@@ -98,7 +98,7 @@ interface Main{
             /** ページの id */
             i: number;
             /** アイテムの id */
-            t: "Id";
+            t: string;
             /** アイテムオブジェクトの種類 (p: png, j: jpeg) */
             k: "p" | "j";
             /** ページの名前 */
@@ -162,7 +162,7 @@ interface Summary{
 ```typescript
 
 interface Main{
-  /** プレフィックス it: + owner id */
+  /** プレフィックス si: + owner id */
   o: string;
   /** score id */
   s: string;
