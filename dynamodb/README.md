@@ -125,7 +125,7 @@ interface Main{
 interface Annotation{
     /** "sc:" + owner id */
     o: string;
-    /** score id + chunk 2桁の数字 + 拡張用の1桁の数字 */
+    /** score id + ":a:" + chunk 2桁の数字 + 拡張用の1桁の数字 */
     s: string;
     /** アノテーションデータ */
     a: {
