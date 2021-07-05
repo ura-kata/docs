@@ -49,7 +49,7 @@ interface Summary{
     /** 固定値 */
     s: "summary";
     /** 楽観ロック */
-    l: number;
+    l: string;
     /** 楽譜の保存数 */
     sc: number;
 }
@@ -72,7 +72,9 @@ interface Main{
     /** アクセスについて */
     as: "pr" | "pu";
     /** 楽観ロック */
-    l: number;
+    l: string;
+    /** トランザクションタイムアウト Unix ミリ秒 */
+    x: number;
     /** データ構造のバージョン */
     v: string;
     /** スナップショットの数 */
@@ -152,7 +154,7 @@ interface Summary{
   /** owner が所有しているアイテムの数 */
   c: number;
   /** 楽観ロック */
-  l: number;
+  l: string;
 }
 
 ```
@@ -167,7 +169,9 @@ interface Main{
   /** score id */
   s: string;
   /** 楽観ロック */
-  l: number;
+  l: string;
+  /** トランザクションタイムアウト */
+  x: number;
   /** データ構造のバージョン */
   v: number;
   /** 楽譜に含まれるアイテムのトータルサイズ */
