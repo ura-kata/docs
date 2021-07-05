@@ -73,8 +73,10 @@ interface Main{
     as: "pr" | "pu";
     /** 楽観ロック */
     l: string;
+    /** トランザクションスタート Unix ミリ秒 */
+    xs: number;
     /** トランザクションタイムアウト Unix ミリ秒 */
-    x: number;
+    xt: number;
     /** データ構造のバージョン */
     v: string;
     /** スナップショットの数 */
@@ -170,8 +172,10 @@ interface Main{
   s: string;
   /** 楽観ロック */
   l: string;
+  /** トランザクションスタート Unix ミリ秒 */
+  xs: number;
   /** トランザクションタイムアウト */
-  x: number;
+  xt: number;
   /** データ構造のバージョン */
   v: number;
   /** 楽譜に含まれるアイテムのトータルサイズ */
