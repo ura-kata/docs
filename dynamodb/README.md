@@ -43,15 +43,17 @@
 
 ```typescript
 
-interface Summary{
+interface ScoreSummary{
     /** "sc:" + owner id */
     o: string;
     /** 固定値 */
     s: "summary";
-    /** 楽観ロック */
-    l: string;
     /** 楽譜の保存数 */
-    sc: number;
+    c: number;
+    /** 作成日時 */
+    ca: number;
+    /** 更新日時 */
+    ua: number;
 }
 
 ```
@@ -60,7 +62,7 @@ interface Summary{
 
 ```typescript
 
-interface Main{
+interface ScoreMain{
     /** "sc:" + owner id */
     o: string;
     /** score id */
@@ -71,14 +73,14 @@ interface Main{
     ua: number;
     /** アクセスについて */
     as: "pr" | "pu";
-    /** 楽観ロック */
-    l: string;
+    /** リソースの特定バージョンの識別子(変更があった場合に変更される値) */
+    e: string;
     /** トランザクションスタート Unix ミリ秒 */
     xs: number;
     /** トランザクションタイムアウト Unix ミリ秒 */
     xt: number;
     /** データ構造のバージョン */
-    v: string;
+    v: number;
     /** スナップショットの数 */
     nc: number;
     n: {
@@ -126,7 +128,7 @@ interface Main{
 
 ```typescript
 
-interface Annotation{
+interface ScoreAnnotation{
     /** "sc:" + owner id */
     o: string;
     /** score id + ":a:" + chunk 2桁の数字 + 拡張用の1桁の数字 */
@@ -146,17 +148,19 @@ interface Annotation{
 
 ```typescript
 
-interface Summary{
-  /** "si:" + owner id */
-  o: string;
-  /** 固定値 summary */
-  s: "summary";
-  /** owner が所有しているアイテムの合計サイズ */
-  t: number;
-  /** owner が所有しているアイテムの数 */
-  c: number;
-  /** 楽観ロック */
-  l: string;
+interface ItemSummary{
+    /** "si:" + owner id */
+    o: string;
+    /** 固定値 summary */
+    s: "summary";
+    /** owner が所有しているアイテムの合計サイズ */
+    t: number;
+    /** owner が所有しているアイテムの数 */
+    c: number;
+    /** 作成日時 */
+    ca: number;
+    /** 更新日時 */
+    ua: number;
 }
 
 ```
@@ -165,34 +169,36 @@ interface Summary{
 
 ```typescript
 
-interface Main{
-  /** プレフィックス si: + owner id */
-  o: string;
-  /** score id */
-  s: string;
-  /** 楽観ロック */
-  l: string;
-  /** トランザクションスタート Unix ミリ秒 */
-  xs: number;
-  /** トランザクションタイムアウト */
-  xt: number;
-  /** データ構造のバージョン */
-  v: number;
-  /** 楽譜に含まれるアイテムのトータルサイズ */
-  t: number;
-  /** アイテムの数 */
-  c: number;
-  /** item のリスト */
-  i: {
-    /** アイテムの ID */
-    i: string;
-    /** アイテムオブジェクトの種類 (p: png, j: jpeg) */
-    k: "p" | "j";
-    /** アイテム１つに含まれるデータのトータルサイズ */
+interface ItemMain{
+    /** プレフィックス si: + owner id */
+    o: string;
+    /** score id */
+    s: string;
+    /** 作成日時 */
+    ca: number;
+    /** 更新日時 */
+    ua: number;
+    /** トランザクションスタート Unix ミリ秒 */
+    xs: number;
+    /** トランザクションタイムアウト */
+    xt: number;
+    /** データ構造のバージョン */
+    v: number;
+    /** 楽譜に含まれるアイテムのトータルサイズ */
     t: number;
-    /** アイテムのオリジナル名 */
-    n: string;
-  }[];
+    /** アイテムの数 */
+    c: number;
+    /** item のリスト */
+    i: {
+        /** アイテムの ID */
+        i: string;
+        /** アイテムオブジェクトの種類 (p: png, j: jpeg) */
+        k: "p" | "j";
+        /** アイテム１つに含まれるデータのトータルサイズ */
+        t: number;
+        /** アイテムのオリジナル名 */
+        n: string;
+    }[];
 }
 
 ```
