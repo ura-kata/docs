@@ -99,6 +99,8 @@ interface ScoreMain{
         d: string;
         /** ページ数 */
         pc: number;
+        /** 次のページの id */
+        pi: number;
         /** ページデータ */
         p: {
             /** ページの id */
@@ -110,12 +112,16 @@ interface ScoreMain{
             /** ページの名前 */
             p: string;
         }[];
+        /** 次のアノテーション の id */
+        ai: number;
         /** アノテーションの数 */
         ac: number;
         /** アノテーションデータ */
         a: {
             /** アノテーションの id */
             i: number;
+            /** アノテーションデータとの関連 id */
+            r: number;
             /** アノテーションの文字列の長さ */
             l: number;
         }[];
@@ -135,7 +141,7 @@ interface ScoreAnnotation{
     s: string;
     /** アノテーションデータ */
     a: {
-        [id: string /** アノテーションの ID 数字0埋め最大5桁 */]: string
+        [id: string /** アノテーションデータとの関連 id 数字0埋め最大5桁 */]: string
     };
 }
 
