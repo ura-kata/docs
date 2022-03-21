@@ -137,7 +137,7 @@ interface ScoreMain{
 interface ScoreAnnotation{
     /** "sc:" + owner id */
     o: string;
-    /** score id + ":a:" + chunk 2桁の数字 + 拡張用の1桁の数字 */
+    /** score id + ":a:" + 拡張用の1桁の数字 + chunk 2桁の数字 */
     s: string;
     /** アノテーションデータ */
     a: {
