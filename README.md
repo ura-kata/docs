@@ -28,3 +28,11 @@ Lambda@Edge -> CloudFront
 CloudFront --> User: response 200
 @enduml
 ```
+
+# データ構造
+
+## DynamoDB の構造
+
+DynamoDB の1レコードにはなる別密度が高くなるようにデータを配置する
+
+[ここ](./dynamodb/README.md)を参照
